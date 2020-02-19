@@ -18,6 +18,7 @@ login = LoginManager(app)
 login.login_view = 'login'
 db = SQLAlchemy(app)
 
+from giphylib.client import API_KEY
 from models import *
 
 class LoginForm(FlaskForm):
@@ -89,10 +90,9 @@ def index():
 @app.route('/search', methods=['GET', 'POST', 'PUT'])
 @login_required
 def search():
-    #return redirect(url_for("web_index"))
     if request.method == 'POST':
         query = request.form['query']
-        gapi = GAPI(os.environ['GIPHY_API_KEY'])
+        gapi = GAPI(API_KEY)
         results = gapi.search(query=query)
         return render_template('search.html', results=results.data)
     return render_template('search.html', results=[])
@@ -128,7 +128,6 @@ def delete():
                 .filter_by(userid=session.get('_user_id'))
                 .delete()
         )
-        #db.session.delete(gifs)
         db.session.commit()
     return redirect(url_for('manage'))
 

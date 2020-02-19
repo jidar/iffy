@@ -54,8 +54,6 @@ class dispatch(object):
                 image_data  = dict(images= {args.image_type:data['data']['images'][args.image_type]})
             print(cls._derive_prettytable(new_data))
             print(cls._derive_prettytable(image_data))
-        # if data.get('meta'):
-        #     print(cls._derive_prettytable(data['meta']))
 
 
     @classmethod

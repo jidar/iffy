@@ -3,7 +3,7 @@ from giphylib import schema
 import requests
 import time
 
-API_KEY='put-key-here'
+API_KEY='V411WcxjXYnkgoX5DEa8z6bt20oCyfLb'
 class GiphyAPIClientError(Exception):
     pass
 
