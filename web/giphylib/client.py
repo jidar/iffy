@@ -3,7 +3,7 @@ from giphylib import schema
 import requests
 import time
 
-
+API_KEY='put-key-here'
 class GiphyAPIClientError(Exception):
     pass
 
@@ -44,7 +44,7 @@ class APICLient(object):
 class Giphy(object):
     def __init__(self, apikey):
         self.apikey = apikey
-        self.api = APICLient(apikey)
+        self.api = APICLient(API_KEY)
 
     def search(
             self, query, limit=25, offset=0, rating="g", lang="en",
