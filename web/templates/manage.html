@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<a href="/">Iffy</a>
+<a href="/manage">Manage</a>
+<a href="/search">Search</a>
+<a href="/login">Login</a>
+<a href="/logout">Logout</a>
+
+<h1>Manage</h1>
+
+<div>
+  <form action="{{ url_for('delete') }}" method=post>
+    {% for gif in gifs %}
+      <input type="submit" class="btn btn-primary btn-lg btn-block" value="DeleteSelected">
+      <input type="checkbox" id="{{gif.gifid}}" name="deleted" value="{{gif.gifid}}">
+      <label for="{{gif.gifid}}">{{gif.slug}}</label>
+      <iframe src="https://giphy.com/embed/{{gif.gifid}}" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/{{gif.slug}}">via GIPHY</a></p>
+    {% endfor %}
+  </form>
+</div>
+
+{% endblock %}

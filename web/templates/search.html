@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<a href="/">Iffy</a>
+<a href="/manage">Manage</a>
+<a href="/search">Search</a>
+<a href="/login">Login</a>
+<a href="/logout">Logout</a>
+
+<div class="text-center">
+  <h1>Search</h1>
+</div>
+
+<br>
+
+<form action="{{ url_for('search') }}" method="POST">
+  <div class="form-group">
+    <input name="query" class="form-control input-lg" type="text" placeholder="Search giphy" required>
+  </div>
+  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Search">
+</form>
+
+<br>
+<hr>
+
+<div>
+  <form action="{{ url_for('manage') }}" name="manageform" method="POST">
+    {% for result in results %}
+      <input type="submit" class="btn btn-primary btn-lg btn-block" value="SaveAllSelected">
+      <input type="checkbox" id="id_{{result.id}}" name="saved" value="{{result.id}}::{{result.slug}}">
+      <label for="id_{{result.id}}">{{result.name}}</label>
+      <iframe src="https://giphy.com/embed/{{result.id}}" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/{{result.slug}}">via GIPHY</a></p>
+    {% endfor %}
+  </form>
+</div>
+
+{% endblock %}

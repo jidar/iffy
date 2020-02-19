@@ -1,0 +1,48 @@
+version: '3'
+
+# The flask app, running on gunicorn
+services:
+  web:
+    restart: always
+    build: ./web
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+    volumes:
+      - web-data:/usr/src/app/static
+    env_file:
+      - .env
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+# reverse proxy for request forwarding (slightly magical)
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .:/www/static
+      - web-data:/usr/src/app/static
+    links:
+      - web:web
+
+#database deployment magic
+  data:
+    image: postgres:9.5.18
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    command: "true"
+
+  postgres:
+    restart: always
+    image: postgres:9.5.18
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+# Putting these in another container to keep them alive if the other containers die
+volumes:
+  db-data:
+  web-data:

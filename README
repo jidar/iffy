@@ -1,0 +1,53 @@
+## Run / Install
+
+run scripts/coldstart.sh
+then run scripts/refresh.sh
+
+
+## Helpful Commands
+
+# Kill the docker machine
+docker-machine rm dev
+
+# new docker Machine + eval
+docker-machine create -d virtualbox dev; eval "$(docker-machine env dev)"
+
+# show Machines
+docker-machine ls
+
+# build project
+docker-compose up --build -d
+
+# create DB table
+docker-compose run web /usr/local/bin/python create_db.py
+
+# inspect env vars
+docker-compose run web env
+
+# view logs
+docker-compose logs
+
+# shell into DB
+docker-compose run postgres psql -h "$(docker-machine ip dev)" -p 5432 -U postgres --password
+
+### rebuild/redeploy
+docker-compose build; docker-compose up -d
+
+### curl tests
+curl -X GET http://192.168.99.101/api
+
+postgresql cheat sheet:
+https://www.postgresqltutorial.com/postgresql-cheat-sheet/
+
+# list all tables
+\dt
+
+#get table rows
+select * from posts;
+
+# filter
+SELECT *
+FROM table
+WHERE condition;
+
+curl
