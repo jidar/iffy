@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from config import BaseConfig
-from giphylib.client import Giphy as GAPI
+from iffylib.client import Giphy as GAPI
 from flask import Flask
 from flask import request, render_template, jsonify, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
@@ -18,7 +18,7 @@ login = LoginManager(app)
 login.login_view = 'login'
 db = SQLAlchemy(app)
 
-from giphylib.client import API_KEY
+API_KEY='API KEY HERE'
 from models import *
 
 class LoginForm(FlaskForm):

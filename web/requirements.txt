@@ -11,3 +11,4 @@ jsonify
 requests
 flask-login
 Flask-WTF
+iffylib
