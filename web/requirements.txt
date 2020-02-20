@@ -12,3 +12,4 @@ requests
 flask-login
 Flask-WTF
 iffylib
+flask-bootstrap

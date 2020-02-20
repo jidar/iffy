@@ -2,12 +2,6 @@
 
 {% block content %}
 
-<a href="/">Iffy</a>
-<a href="/manage">Manage</a>
-<a href="/search">Search</a>
-<a href="/login">Login</a>
-<a href="/logout">Logout</a>
-
 <div class="text-center">
   <h1>Search</h1>
 </div>
@@ -17,6 +11,20 @@
 <form action="{{ url_for('search') }}" method="POST">
   <div class="form-group">
     <input name="query" class="form-control input-lg" type="text" placeholder="Search giphy" required>
+    <label for="limit">Limit:</label>
+    <input type="number" id="limit" name="limit" min="1" max="25">
+    <label for="rating">Rating:</label>
+    <select name="rating">
+        <option value= "g" selected>g</option>"
+        <option value= "pg">pg</option>"
+        <option value= "pg-13">pg-13</option>"
+        <option value= "r">r</option>"
+    </select>
+    <select name="lang">
+        <option value= "en" selected>en</option>"
+        <option value= "es">es</option>"
+        <option value= "fr">fr</option>"
+    </select>
   </div>
   <input type="submit" class="btn btn-primary btn-lg btn-block" value="Search">
 </form>
@@ -27,10 +35,12 @@
 <div>
   <form action="{{ url_for('manage') }}" name="manageform" method="POST">
     {% for result in results %}
-      <input type="submit" class="btn btn-primary btn-lg btn-block" value="SaveAllSelected">
-      <input type="checkbox" id="id_{{result.id}}" name="saved" value="{{result.id}}::{{result.slug}}">
-      <label for="id_{{result.id}}">{{result.name}}</label>
-      <iframe src="https://giphy.com/embed/{{result.id}}" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/{{result.slug}}">via GIPHY</a></p>
+      <div class="container">
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="SaveAllSelected">
+        <input type="checkbox" class="checkbox" id="id_{{result.id}}" name="saved" value="{{result.id}}::{{result.slug}}">save</input>
+        <label for="id_{{result.id}}">{{result.slug}}</label>
+        <div style="width:100%;height:0;padding-bottom:81%;position:relative;"><iframe src="https://giphy.com/embed/{{result.id}}" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/{{result.slug}}">via GIPHY</a></p>
+      </div>
     {% endfor %}
   </form>
 </div>

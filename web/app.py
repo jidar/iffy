@@ -11,14 +11,16 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
 login = LoginManager(app)
 login.login_view = 'login'
 db = SQLAlchemy(app)
+bootstrap = Bootstrap(app)
 
-API_KEY='API KEY HERE'
+API_KEY='API-KEY-HERE'
 from models import *
 
 class LoginForm(FlaskForm):
@@ -92,8 +94,12 @@ def index():
 def search():
     if request.method == 'POST':
         query = request.form['query']
+        rating = request.form['rating']
+        limit = request.form['limit']
+        lang = request.form['lang']
         gapi = GAPI(API_KEY)
-        results = gapi.search(query=query)
+        results = gapi.search(
+            query=query, rating=rating, limit=limit, lang=lang)
         return render_template('search.html', results=results.data)
     return render_template('search.html', results=[])
 
